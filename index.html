@@ -32,7 +32,8 @@
       border-radius: 20px 20px 0 0;
       box-shadow: 0 4px 18px rgba(25, 118, 210, 0.08);
       margin-bottom: 0.5rem;
-      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .tab {
       border-bottom: 2px solid transparent;
@@ -41,6 +42,8 @@
       border-radius: 0;
       background: transparent;
       transition: background .2s, color .2s;
+      white-space: nowrap;
+      flex: 1 1 0;
     }
     .tab.active {
       border-color: #1976d2 !important;
@@ -106,6 +109,16 @@
       background: #1976d2;
       color: #fff;
       border: 2px solid #1976d2;
+    }
+    @media (max-width: 640px) {
+      .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .tab {
+        min-width: 110px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -590,7 +603,10 @@
               </tr>
             </thead>
             <tbody>
-              ${data.slice(1).filter(row => row.some(cell => cell !== "" && cell !== null && cell !== undefined)).map(row => `<tr>${row.map(cell=>`<td class="border px-2 py-1">${cell||''}</td>`).join('')}</tr>`).join('')}
+              ${data.slice(1)
+                .filter(row => row.some(cell => cell !== "" && cell !== null && cell !== undefined))
+                .map(row => `<tr>${row.map(cell=>`<td class="border px-2 py-1">${cell||''}</td>`).join('')}</tr>`)
+                .join('')}
             </tbody>
           </table>
         </div>
